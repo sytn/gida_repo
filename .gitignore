@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Expo specific
+.expo/
+.expo-shared/
+
+# Environment variables
+.env
+.env.*.local
+.env.local
+
+# macOS system files
+.DS_Store
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.tar.gz
+
+# TypeScript cache
+*.tsbuildinfo
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Supabase generated files (if any local ones are used)
+supabase/.temp/
+supabase/migrations/.temp/
+
+# Optional: Metro bundler cache (React Native)
+metro-cache/
+
+# Optional: Log files
+*.log
+
+# Watchman config (if used)
+.watchmanconfig
