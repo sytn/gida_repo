@@ -1,15 +1,12 @@
 from rest_framework import serializers
-from .models import Todo, UserProfile
-from django.contrib.auth.models import User
 
-class TodoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Todo
-        fields = '__all__'
-class UserProfileSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+class TodoSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=200)
+    completed = serializers.BooleanField(default=False)
 
-    class Meta:
-        model = UserProfile
-        fields = ['user', 'age', 'weight', 'height', 'gender', 'daily_calorie_need']
-        read_only_fields = ['daily_calorie_need']
+class UserProfileSerializer(serializers.Serializer):
+    age = serializers.IntegerField(min_value=1)
+    weight = serializers.FloatField(min_value=1, help_text="Kilo (kg)")
+    height = serializers.IntegerField(min_value=1, help_text="Boy (cm)")
+    gender = serializers.ChoiceField(choices=['Erkek', 'Kadın'])
+    daily_calorie_need = serializers.FloatField(read_only=True, help_text="Günlük kalori ihtiyacı (BMR)")

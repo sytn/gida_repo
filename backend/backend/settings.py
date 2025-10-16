@@ -1,5 +1,6 @@
 import os
-import dj_database_url
+import firebase_admin
+from firebase_admin import credentials
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -11,7 +12,17 @@ SECRET_KEY = 'django-insecure-wn&p05z$652#9ctopf5p#v5=rh)=&)(1)8q(2$l)0hu=4^zqrt
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# Firebase Admin SDK Kurulumu
+# Not: "firebase-service-account.json" dosyasını projenizin ana dizinine ekleyin.
+# Bu dosyayı Firebase Proje Ayarları -> Hizmet Hesapları bölümünden oluşturabilirsiniz.
+SERVICE_ACCOUNT_KEY_PATH = BASE_DIR / 'firebase-service-account.json'
+
+if not firebase_admin._apps:
+    cred = credentials.Certificate(SERVICE_ACCOUNT_KEY_PATH)
+    firebase_admin.initialize_app(cred)
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,11 +66,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('SUPABASE_CONNECTION_STRING_URI')
-    )
-}
+# Veritabanı yapılandırması kaldırıldı, çünkü artık Firestore kullanıyoruz.
+DATABASES = {}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -67,12 +75,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
